@@ -1,5 +1,5 @@
 # Build Wizard
-FROM node:16 as wizard-builder
+FROM node:16-bullseye as wizard-builder
 
 RUN apt-get update && apt-get install -y openssl
 
@@ -13,13 +13,13 @@ COPY monitor .
 RUN yarn install
 
 # Build Wallet
-FROM node:16 as web-wallet-builder
+FROM node:16-bullseye as web-wallet-builder
 
 WORKDIR /package/wallet
 RUN git clone https://github.com/qtumproject/qtum-web-wallet .
 
 # Final image
-FROM --platform=linux/amd64 golang:1.13-buster
+FROM --platform=linux/amd64 golang:1.20-bullseye
 
 ARG VERSION
 
