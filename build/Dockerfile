@@ -19,7 +19,7 @@ WORKDIR /package/wallet
 RUN git clone https://github.com/qtumproject/qtum-web-wallet .
 
 # Final image
-FROM --platform=linux/amd64 golang:1.13.4-buster
+FROM --platform=linux/amd64 golang:1.13.4-bullseye
 
 ARG VERSION
 
@@ -32,8 +32,8 @@ RUN set -ex \
     && QTUM_URL=`cat /tmp/qtum_url` \
     && QTUM_DIST=$(basename $QTUM_URL) \
     && wget -O $QTUM_DIST $QTUM_URL \
-	&& tar -xzvf $QTUM_DIST -C /usr/local --strip-components=1 \
-	&& rm /tmp/qtum*
+    && tar -xzvf $QTUM_DIST -C /usr/local --strip-components=1 \
+    && rm /tmp/qtum*
 
 RUN mkdir -p /package/data/qtum
 ENV QTUM_CONF_PATH=/package/data/qtum.conf
